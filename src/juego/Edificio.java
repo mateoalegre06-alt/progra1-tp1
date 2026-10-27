@@ -24,7 +24,16 @@ public class Edificio {
 	 public int getX() { return x; }
 	    public int getY() { return y; }
 	    public boolean esNegocio() { return esNegocio; }
+	    
 
+public void dibujarFlecha(entorno.Entorno e, Color color) {
+    
+    e.dibujarRectangulo(x, y - 25, 4, 30, 0, color);
+
+    
+    e.dibujarTriangulo(x, y - 40, 15, 15, 0, color);
 }
 
+	    
+}
 	
