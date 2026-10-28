@@ -11,6 +11,7 @@ public class Enemigo {
     private int direccion;
     private boolean vertical;
     private boolean poneBombas;
+    private int proximaBomba = 2000;
 
     public Enemigo(int x, int y, int velocidad,
                    int minimo, int maximo,
@@ -23,7 +24,6 @@ public class Enemigo {
         this.maximo = maximo;
         this.vertical = vertical;
         this.poneBombas = poneBombas;
-
         this.direccion = 1;
     }
 
@@ -36,21 +36,26 @@ public class Enemigo {
     } else {
         nuevoX = x + velocidad * direccion;
     }
-    if (vertical && (nuevoY >= maximo || nuevoY <= minimo)) {
-        direccion = -direccion;
-       
-    } if (mapa.puedeOcupar(nuevoX, nuevoY, 12)) {
-        direccion = -direccion;
     
+    boolean seSale;
+    if (vertical) {
+        seSale = nuevoY <= minimo || nuevoY >= maximo;
+    } else {
+        seSale = nuevoX <= minimo || nuevoX >= maximo;
+    }  
+        
+       
+     if (seSale || !mapa.puedeOcupar(nuevoX, nuevoY, 12)) {
+        direccion = -direccion;
     } else {
     	x = nuevoX;
         y = nuevoY;
+   
     }
   }
 
     public void dibujar(Entorno e) {
         Color color = poneBombas ? Color.MAGENTA : Color.BLUE;
-
         e.dibujarRectangulo(x, y, 25, 25, 0, color);
     }
 
@@ -60,10 +65,20 @@ public class Enemigo {
             && py > y - d && py < y + d;
     }
 
-    public boolean esBombardero() {
-        return poneBombas;
-    }
+    public boolean debeSoltarBomba(int ahora) {
+        if (poneBombas && ahora >= proximaBomba) {
+        	proximaBomba = ahora + 4000;
+        	return true;
+        }
+    return false;
 
 }
+public boolean esBombardero() { return poneBombas; }
+public boolean esVertical() {return vertical; }
+public int getX() { return x; }
+public int getY() {return y; }
+}
+
+
 
 

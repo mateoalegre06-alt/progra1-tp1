@@ -146,13 +146,11 @@ public class Juego extends InterfaceJuego {
         px = jugador.getPosicion().x;
         py = jugador.getPosicion().y;
 
-        
-        proyectil = new Proyectil(px, py, entorno.mouseX(), entorno.mouseY());
-        
-
+        if (entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO) && proyectil == null) {
+        	proyectil = new Proyectil(px, py, jugador.getDirX(), jugador.getDirY());
+        }
         if (proyectil != null) {
             proyectil.mover();
-
             if (proyectil.fueraDelMapa()) {
                 proyectil = null;
             } else {
