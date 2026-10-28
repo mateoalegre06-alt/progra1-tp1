@@ -19,16 +19,17 @@ public class Juego extends InterfaceJuego {
     private Enemigo[] enemigos;
     private Pedido pedido;
     private Proyectil proyectil;
-
+    private boolean muertoPorBomba = false;
     private int entregados = 0;
     private int eliminados = 0;
     private int perdidos = 0;
     private int proximoPedido = ESPERA_PEDIDO;
+   
     private Enemigo crearEnemigo() {
         int x = CALLES_X[(int)(Math.random() * 5)];  
         int y = 80;                                 
         boolean vertical = Math.random() < 0.5;     
-        boolean poneBombas = Math.random() < 0.3;   
+        boolean poneBombas = false;   
 
         if (vertical) {
             return new Enemigo(x, y, 1, Mapa.TOPE, Mapa.ALTO, true, poneBombas);
@@ -52,7 +53,8 @@ public class Juego extends InterfaceJuego {
     public void tick() {
         int ahora = entorno.tiempo();
 
-        if (jugador.getVidas() <= 0 || perdidos >= MAX_PERDIDOS) {
+        if (jugador.getVidas() <= 0 || perdidos >= MAX_PERDIDOS || muertoPorBomba){
+         
             entorno.cambiarFont("Arial", 40, Color.RED);
             entorno.escribirTexto("GAME OVER", 270, 300);
             return;
@@ -64,13 +66,13 @@ public class Juego extends InterfaceJuego {
             return;
         }
 
-        mapa.dibujar(entorno);
+        mapa.dibujar(entorno);                                  //Mapa
 
         int px = jugador.getPosicion().x;
         int py = jugador.getPosicion().y;
 
         	
-        if (pedido == null) {
+        if (pedido == null) {                                                               //pedido
             if (ahora >= proximoPedido) {
                 pedido = new Pedido(
                     mapa.getCasaAleatoria(),
@@ -146,7 +148,7 @@ public class Juego extends InterfaceJuego {
         px = jugador.getPosicion().x;
         py = jugador.getPosicion().y;
 
-        if (entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO) && proyectil == null) {
+        if (entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO) && proyectil == null) {                             //proyectil
         	proyectil = new Proyectil(px, py, jugador.getDirX(), jugador.getDirY());
         }
         if (proyectil != null) {
@@ -159,7 +161,7 @@ public class Juego extends InterfaceJuego {
         }
 
         
-        for (int i = 0; i < enemigos.length; i++) {
+        for (int i = 0; i < enemigos.length; i++) {																//enemigos
             if (enemigos[i] == null) {
                 enemigos[i] = crearEnemigo();
             } 
