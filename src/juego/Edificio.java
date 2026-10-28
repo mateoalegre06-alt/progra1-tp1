@@ -4,8 +4,9 @@ import java.awt.Color;
 
 public class Edificio {
 
-	public int x, y, ancho, alto;
-	public boolean esNegocio;
+	private int x, y, ancho, alto;
+	private boolean esNegocio;
+	
 	public Edificio(int x, int y, int ancho, int alto, boolean esNegocio) {
         this.x = x; this.y = y; this.ancho = ancho; this.alto = alto;
         this.esNegocio = esNegocio;
@@ -22,7 +23,7 @@ public class Edificio {
 	    }
  
 	 public int getX() { return x; }
-	    public int getY() { return y; }
+	 public int getY() { return y; }
 	    public boolean esNegocio() { return esNegocio; }
 	    
 

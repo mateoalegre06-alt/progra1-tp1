@@ -5,12 +5,12 @@ import entorno.Entorno;
 
 public class Enemigo {
 
-    public int x, y;
-    public int velocidad;
-    public int minimo, maximo;
-    public int direccion;
-    public boolean vertical;
-    public boolean poneBombas;
+    private int x, y;
+    private int velocidad;
+    private int minimo, maximo;
+    private int direccion;
+    private boolean vertical;
+    private boolean poneBombas;
 
     public Enemigo(int x, int y, int velocidad,
                    int minimo, int maximo,
@@ -55,8 +55,9 @@ public class Enemigo {
     }
 
     public boolean colisiona(int px, int py, int mitad) {
-        return Math.abs(px - x) < 12 + mitad
-            && Math.abs(py - y) < 12 + mitad;
+        int d = 12 + mitad;
+        return px > x - d && px < x + d
+            && py > y - d && py < y + d;
     }
 
     public boolean esBombardero() {
